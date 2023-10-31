@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, Button, ToastAndroid, TouchableOpacity } from 'react-native';
-import { RouderdButton } from '../../Presentation/components/RouderdButton';
+import { RouderdButton } from '../../../Presentation/components/RouderdButton';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParomList } from '../../../App';
