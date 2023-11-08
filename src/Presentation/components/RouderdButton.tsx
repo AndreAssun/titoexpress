@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 40,
         backgroundColor: '#ff2800',
-        borderRadius: 15,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     
 
     lblButton:{
+        
        color: '#fff',
        fontSize: 16,
        fontWeight: 'bold',
