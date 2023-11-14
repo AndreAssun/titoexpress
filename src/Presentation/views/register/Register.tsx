@@ -1,90 +1,157 @@
-import React from "react";
-// import Home from './src/views/home/Home'
-import { View, StyleSheet, ImageBackground, Text, ToastAndroid } from 'react-native';
-import { Input } from "../../../Presentation/components/Input";
-import { RouderdButton } from "../../../Presentation/components/RouderdButton";
-import { RadioButton } from "react-native-paper";
-import { Logo } from "../../../Presentation/components/Logo";
+// import * as React from 'react';
+// import { StatusBar } from 'expo-status-bar';
+import { View, Text, StyleSheet, Image, TextInput, Button, ToastAndroid, ImageBackground } from 'react-native';
+import { RouderdButton } from '../../../Presentation/components/RouderdButton'
+import { RadioButton } from 'react-native-paper';
+
+
+import React, { useState } from 'react';
+// import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+// import { RouderdButton } from '../../../Presentation/components/RouderdButton'
+import { CustomTextInput } from '../../../Presentation/components/CustomTextInput';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../../App';
+import RegisterViewModel from './ViewModel';
 
 export const RegisterScreen = () => {
-    const [value, setValue] = React.useState('1');
-    return (
-        <ImageBackground style={styles.imagem} source={require("../../../../assets/mesa.jpg")} resizeMode="cover">
-            <Logo></Logo>
-            <View style={styles.form}>
-                <Text style={styles.txtInput}>Nome completo</Text>
-                <Input></Input>
-                <Text style={styles.txtInput}>E-mail</Text>
-                <Input></Input>
-                <Text style={styles.txtInput}>Senha</Text>
-                <Input></Input>
-                <Text style={styles.txtInput}>Confirme a sua senha</Text>
-                <Input></Input>
 
-                <Text style={styles.txtForm}>Tipo de Cadastro</Text>
-                <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
-                    <View style={styles.radioContainer}>
-                        <View style={styles.radioInput}>
-                            <Text style={styles.txtRadio}>Cliente</Text>
-                            <RadioButton value="1" />
-                        </View>
-                        <View style={styles.radioInput}>
-                            <Text style={styles.txtRadio}>Vendedor</Text>
-                            <RadioButton value="2" />
-                        </View>
-                        <View style={styles.radioInput}>
-                            <Text style={styles.txtRadio}>Entregador</Text>
-                            <RadioButton value="3" />
-                        </View>
+
+    const [checked, setChecked] = React.useState('first');
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+    const { email, senha, nome, sobrenome, 
+        onChange, register } = RegisterViewModel();
+
+
+    return (
+   
+
+        <ImageBackground
+            style={styles.fundo}
+            source={require('../../../../assets/layout/bg-signup.png')}
+            resizeMode="cover">
+
+            <Image
+                style={styles.logo}
+                source={require('../../../../assets/layout/logo.png')} />
+
+            <View style={styles.form}>
+                <CustomTextInput
+                    label='Nome'
+                    placeholder='Digite seu Nome'
+                    keyboardType='default'
+                    value={nome}
+                    property='nome'
+                    onChangeText={onChange}
+                />
+                <CustomTextInput
+                    label='Sobrenome'
+                    placeholder='Digite seu Sobrenome'
+                    keyboardType='default'
+                    value={sobrenome}
+                    property='sobrenome'
+                    onChangeText={onChange}
+                />
+                
+                <CustomTextInput
+                    label='E-mail'
+                    placeholder='Digite seu E-mail'
+                    keyboardType='email-address'
+                    value={email}
+                    property='email'
+                    onChangeText={onChange}
+                />
+                <CustomTextInput
+                    label='Senha'
+                    placeholder='Digite sua Senha'
+                    keyboardType='default'
+                    secureTextEntry={true}
+                    value={senha}
+                    property='senha'
+                    onChangeText={onChange}
+                />
+                
+                <View>
+                    <View style={styles.container}>
+                        <RadioButton
+                            value="cliente"
+                            status={checked === 'cliente' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('cliente')}
+                        />
+                        <Text style={styles.texto}>Cliente</Text>
+                        <RadioButton
+                            value="vendedor"
+                            status={checked === 'vendedor' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('vendedor')}
+                        />
+                        <Text style={styles.texto}>Vendedor</Text>
+                        <RadioButton
+                            value="entregador"
+                            status={checked === 'entregador' ? 'checked' : 'unchecked'}
+                            onPress={() => setChecked('entregador')}
+                        />
+                        <Text style={styles.texto}>Entregador</Text>
                     </View>
-                </RadioButton.Group>
-                <RouderdButton lblButton='Cadastrar' onPress={() => ToastAndroid.show('Sucesso!', ToastAndroid.SHORT)} />
-                <Text style={styles.linkForm}>Já tenho uma conta</Text>
+                </View>
+                <RouderdButton
+
+                    lblButton="Cadastrar"
+                    onPress={() => register() }
+
+                />
+
+                <Text style={{ alignSelf: 'center', marginTop: 25 }}>Já sou cadastrado!</Text>
+
             </View>
+
+
         </ImageBackground>
-    )
+
+    );
 }
 
 const styles = StyleSheet.create({
-    imagem: {
+    fundo: {
         flex: 1,
-        tintColor: 'rgba(255,0,255,0.8)',
+        opacity: 0.9
+    },
+
+    logo: {
+        marginTop: '15%',
+        alignSelf: 'center'
+
     },
     form: {
-        marginHorizontal: 25,
+        marginHorizontal: 20,
+        marginTop: '1%',
     },
-    txtInput: {
-        fontSize: 14,
-        marginBottom: 5,
-        color: 'white',
+    frmInput: {
+        marginBottom: 20,
     },
-    txtForm: {
-        textAlign: 'center',
+    txtLabel: {
         fontSize: 16,
-        color: 'white',
-        marginBottom: 10,
+
     },
-    radioContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        gap: 20,
-        marginBottom: 36,
+    txteForm: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        paddingLeft: 10,
+        borderRadius: 20,
+        backgroundColor: '#fff'
+
     },
-    radioInput: {
-        flexDirection: 'row-reverse',
-        alignItems: 'flex-end',
+    container: {
+        // 
+        alignSelf: 'center',
+        marginTop: 15,
+        padding: '5%',
+        flexDirection: 'row'
     },
-    txtRadio: {
-        fontSize: 12,
-        color: 'white',
-        marginBottom: 10,
-        alignContent: 'center',
-    },
-    linkForm: {
-        textAlign: 'center',
-        fontSize: 16,
-        color: 'white',
-        marginTop: 16,
-        textDecorationLine: 'underline',
+    texto: {
+        marginTop: 7,
     }
-});
+
+
+
+})

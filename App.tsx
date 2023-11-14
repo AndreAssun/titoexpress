@@ -1,44 +1,34 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from './src/views/home/Home';
-import { CadastroScreen } from './src/views/cadastro/Cadastro';
-
-
-export type RootStackParomList = {
+import { HomeScreen } from './src/Presentation/views/home/Home';
+import { RegisterScreen } from './src/Presentation/views/register/Register';
+export type RootStackParamList = {
     HomeScreen: undefined,
-    CadastroScreen: undefined,
+    RegisterScreen: undefined,
 }
-
-const Stack = createNativeStackNavigator<RootStackParomList>();
-
-const App = () => {
-    return (
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const App = () =>{
+    return(
         <NavigationContainer>
-            <Stack.Navigator screenOptions={
-                {
+            <Stack.Navigator 
+                screenOptions={{
                     headerShown: false,
-                }
-            }>
-
+            }}>
                 <Stack.Screen
-                    name='HomeScreen'
+                    name="HomeScreen"
                     component={HomeScreen}
                 />
-
                 <Stack.Screen
-                name='CadastroScreen'
-                component={CadastroScreen}
-                options = {{
-                    headerShown: true,
-                    title:'Novo usuário'
-
-                }}
+                    name="RegisterScreen"
+                    component={RegisterScreen}
+                    options={{
+                        headerShown: true,
+                        title: 'Novo Usuário',
+                    }}
                 />
             </Stack.Navigator>
-        </ NavigationContainer>
-
-    )
-}
-
+        </NavigationContainer>
+    );
+};
 export default App;

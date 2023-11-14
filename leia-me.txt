@@ -1,0 +1,6 @@
+Criar a cadeia de pastas
+ - Data/sources/remote/api
+Criar dentro da pasta api o arquivo
+ - ApiDelivery.tsx
+ Adicionar uma dependencia Axios
+  - npm i axios
